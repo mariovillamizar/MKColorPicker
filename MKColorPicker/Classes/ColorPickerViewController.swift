@@ -13,6 +13,8 @@ import UIKit
 open class ColorPickerViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
     open var selectedColor:((_ color:UIColor)->())?
+    open var onDismiss:(()->())?
+    open var initialSelectedIndex: Int?
     open var autoDismissAfterSelection = true
     open var style: ColorPickerViewStyle = .circle{
         didSet{
@@ -79,7 +81,9 @@ open class ColorPickerViewController: UIViewController, UIPopoverPresentationCon
         colorPickerView.style = style
         colorPickerView.selectionStyle = .check
         colorPickerView.isSelectedColorTappable = false
-//        colorPickerView.preselectedIndex = colorPickerView.colors.indices.first
+        if let initialSelectedColor = initialSelectedIndex {
+            colorPickerView.preselectedIndex = initialSelectedColor
+        }
         colorPickerView.colors = allColors
         self.view = colorPickerView
         self.preferredContentSize = colorPickerView.frame.size
@@ -90,6 +94,10 @@ open class ColorPickerViewController: UIViewController, UIPopoverPresentationCon
     override open func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        self.onDismiss?()
     }
     
     override open func didReceiveMemoryWarning() {
