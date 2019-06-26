@@ -81,9 +81,7 @@ open class ColorPickerViewController: UIViewController, UIPopoverPresentationCon
         colorPickerView.style = style
         colorPickerView.selectionStyle = .check
         colorPickerView.isSelectedColorTappable = false
-        if let initialSelectedColor = initialSelectedIndex {
-            colorPickerView.preselectedIndex = initialSelectedColor
-        }
+        colorPickerView.preselectedIndex = initialSelectedIndex
         colorPickerView.colors = allColors
         self.view = colorPickerView
         self.preferredContentSize = colorPickerView.frame.size
