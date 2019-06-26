@@ -14,7 +14,11 @@ open class ColorPickerViewController: UIViewController, UIPopoverPresentationCon
     
     open var selectedColor:((_ color:UIColor)->())?
     open var onDismiss:(()->())?
-    open var initialSelectedIndex: Int?
+    open var initialSelectedIndex: Int? {
+        didSet {
+            colorPickerView.preselectedIndex = initialSelectedIndex
+        }
+    }
     open var autoDismissAfterSelection = true
     open var style: ColorPickerViewStyle = .circle{
         didSet{
